@@ -20,10 +20,16 @@ PneumoniaMNIST is a subset of the MedMNIST benchmark derived from the Guangzhou 
 
 ## Results
 
-| Model       | Test Accuracy | Test AUC |
-|-------------|---------------|----------|
-| Custom CNN  | ~0.87         | ~0.93    |
-| MobileNetV2 | ~0.93         | ~0.97    |
+All metrics reported at Youden-J optimal decision threshold.
+
+| Model       | Test Accuracy | Test AUC | Optimal Threshold |
+|-------------|---------------|----------|-------------------|
+| Custom CNN  | 0.91          | 0.967    | 0.999             |
+| MobileNetV2 | 0.91          | 0.958    | 0.968             |
+
+Both models defaulted toward predicting Pneumonia at threshold 0.5 due to 
+class imbalance (390 pneumonia vs 234 normal in test set), reducing Normal 
+recall to ~0.59. Youden-J threshold optimization corrected this without retraining.
 
 *Exact numbers vary slightly by run; values above are representative.*
 
