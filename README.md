@@ -4,7 +4,7 @@ Binary classification on chest X-rays using the [PneumoniaMNIST](https://medmnis
 
 ## Dataset
 
-PneumoniaMNIST is a subset of the MedMNIST benchmark derived from the Guangzhou Women and Children's Medical Center chest X-ray dataset. It contains 5,856 pediatric chest X-ray images (28×28 grayscale) labelled as Normal or Pneumonia.
+PneumoniaMNIST is a subset of the MedMNIST benchmark derived from the X-ray dataset. It contains 5,856 pediatric chest X-ray images (28×28 grayscale) labelled as Normal or Pneumonia.
 
 | Split | Samples |
 |-------|---------|
@@ -47,6 +47,6 @@ Trained weights are saved as `cnn_pneumonia.pth` and `mobilenetv2_pneumonia.pth`
 
 ## References
 
-- Yang et al., *MedMNIST v2: A Large-Scale Lightweight Benchmark for 2D and 3D Biomedical Image Classification*, Scientific Data 2023.
+- Yang et al., *MedMNIST Classification Decathlon: A Lightweight AutoML Benchmark for Medical Image Analysis*, IEEE ISBI 2021.
 - Sandler et al., *MobileNetV2: Inverted Residuals and Linear Bottlenecks*, CVPR 2018.
 - Kermany et al., *Identifying Medical Diagnoses and Treatable Diseases by Image-Based Deep Learning*, Cell 2018.
