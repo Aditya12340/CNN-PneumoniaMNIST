@@ -35,16 +35,16 @@ recall to ~0.59. Youden-J threshold optimization corrected this without retraini
 
 ## Benchmarking: 
 
-| Method                     | AUC       | ACC (threshold=0.5) |
-|:---------------------------|:---------:|:-------------------:|
-| **Custom CNN**             | **0.967** | 0.845               |
-| Google AutoML Vision       | 0.991     | 0.946               |
-| ResNet-50 (224)            | 0.962     | 0.884               |
-| ResNet-18 (224)            | 0.956     | 0.864               |
-| AutoKeras                  | 0.947     | 0.878               |
-| ResNet-50 (28)             | 0.948     | 0.854               |
-| ResNet-18 (28)             | 0.944     | 0.854               |
-| auto-sklearn               | 0.942     | 0.855               |
+| Method                     | AUC   | ACC   |
+|:---------------------------|:-----:|:-----:|
+| **Custom CNN (Optimized)** | **0.967** | **0.910** |
+| Google AutoML Vision       | 0.991 | 0.946 |
+| ResNet-50 (224)            | 0.962 | 0.884 |
+| ResNet-18 (224)            | 0.956 | 0.864 |
+| AutoKeras                  | 0.947 | 0.878 |
+| ResNet-50 (28)             | 0.948 | 0.854 |
+| ResNet-18 (28)             | 0.944 | 0.854 |
+| auto-sklearn               | 0.942 | 0.855 |
 
 ## Usage
 
