@@ -31,7 +31,44 @@ Both models defaulted toward predicting Pneumonia at threshold 0.5 due to
 class imbalance (390 pneumonia vs 234 normal in test set), reducing Normal 
 recall to ~0.59. Youden-J threshold optimization corrected this without retraining.
 
-*Exact numbers vary slightly by run; values above are representative.*
+## Threshold Optimization
+
+Standard binary classifiers default to a decision threshold of 0.5. On imbalanced 
+datasets this is rarely optimal — PneumoniaMNIST has a 5:3 pneumonia-to-normal ratio, 
+which biases the model toward predicting the majority class. At threshold 0.5, the CNN 
+correctly identified 100% of pneumonia cases but misclassified 41% of healthy patients 
+as pneumonia (Normal recall: 0.59). In a clinical screening context, this false positive 
+rate is unacceptable.
+
+The decision threshold was optimized post-training using the Youden-J statistic:
+
+$$J = \text{TPR} - \text{FPR} = \text{sensitivity} + \text{specificity} - 1$$
+
+This finds the threshold that maximizes the geometric distance from the random-chance 
+diagonal on the ROC curve — balancing sensitivity (catching true pneumonia cases) against 
+specificity (correctly clearing healthy patients). Critically, this requires no retraining 
+— it only shifts the cutoff applied to the model's existing probability outputs.
+
+At the optimal threshold (0.999), Normal recall improved from 0.59 → 0.89 and overall 
+accuracy from 0.845 → 0.910, with balanced precision across both classes. The unusually 
+high threshold value indicates the model's raw probability outputs are poorly calibrated 
+— predictions cluster near 0 and 1 rather than reflecting true class probabilities. This 
+is a known consequence of training with BCE loss on small datasets without explicit 
+calibration (e.g. temperature scaling). The AUC metric is unaffected by this, as it 
+evaluates ranking ability across all thresholds rather than at any single cutoff.
+
+## Training Curves & Confusion Matrices
+
+![Training curves and confusion matrices](download.png)
+
+CNN train loss converges cleanly to near-zero while val loss stabilizes around 0.075,
+indicating good generalization without significant overfitting. The confusion matrix 
+confirms the class imbalance issue at threshold 0.5 — 0 missed pneumonia cases but 
+97 false positives on normal patients, corrected via threshold optimization.
+
+MobileNetV2 val loss plateaus earlier (~epoch 6) and remains noisier throughout,
+consistent with the domain shift hypothesis — the pre-trained features are partially 
+misaligned with 28px chest X-ray inputs, limiting how cleanly the model converges.
 
 ## Benchmarking: 
 
@@ -56,7 +93,6 @@ pip install medmnist torch torchvision scikit-learn seaborn matplotlib
 jupyter notebook pneumonia_mnist.ipynb
 ```
 
-Trained weights are saved as `cnn_pneumonia.pth` and `mobilenetv2_pneumonia.pth`.
 
 ## References
 
